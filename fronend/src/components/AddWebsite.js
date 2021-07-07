@@ -4,24 +4,23 @@ export default class AddWebsite extends Component {
     state = {
         url:"",
     }
-
-
     addWebsite = (e) => {
         e.preventDefault();
         if (this.state.url === "") {
             alert('Please upload your url');
             return
         }
-        this.props.addWebsiteHandler(this.state)
-        this.props.callApi(this.state.url)
         this.setState({url:""})
+        this.props.callApi(this.state.url)
+        console.log(this.state.url)
     }
+    
     render() {
         return (
             <div>
                 <div className="header">
                     <h3>LIVE WEBSITE TRACKING</h3>
-                    <h6> Currently tracking 4 websites</h6>
+                    <h6> Currently tracking {this.props.websites?.length} websites</h6>
                 </div>
                 <div onSubmit={this.addWebsite}>
                     <form>

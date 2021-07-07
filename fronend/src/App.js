@@ -3,15 +3,11 @@ import './App.css';
 import AddWebsite from './components/AddWebsite'
 import { WebisteList } from './components/WebisteList'
 import axios from 'axios';
-function App() {
+function App(props) {
   axios.defaults.baseURL = '';
 
   const [websites, setWebsites] = useState([]);
   const LOCAL_STORAGE_KEY = 'websites'
-  const addWebsiteHandler = (website) => {
-    console.log(website)
-    setWebsites([...websites, website])
-  }
 
   useEffect(() => {
     const getWebsites = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY))
@@ -22,35 +18,29 @@ function App() {
     localStorage.setItem(LOCAL_STORAGE_KEY,JSON.stringify(websites))
   },[websites])
 
-  useEffect(()=>{
-    websites.map(website => {
-      axios.get(website.url)
-      .then(res=>{
-        console.log(res);
-      })
-      return null;
-    })
-  },[websites]);
-  const callApi = async () => {
-    const theres = await axios('/getTitle')
-    const body = await theres.json()
-
-    if(theres.status === 200) {
-      console.log('true')
+  const callApi = async (url) => {
+    const theres = await axios(`http://localhost:5000/getTitle?url=${url}`)
+    let url_data = await theres.data
+    if(url_data.status === 200) {
+      setWebsites([...websites, url_data])
     }
-    else throw Error(body.message);
-    return body
+    else {
+      return({title: null})
+    }
+    
   }
 
   return (
     <div className="ui-container">
+      {/* <p>{websites.legth}</p> */}
           <AddWebsite 
-            addWebsiteHandler = {addWebsiteHandler}
-            callApi={callApi}
+            callApi={(url) => callApi(url)}
+            websites={websites}
           />
           <WebisteList 
             website={websites}
           />
+          
     </div>
   );
 }
