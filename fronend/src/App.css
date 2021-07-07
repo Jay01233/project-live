@@ -1,0 +1,35 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px;
+  border-bottom: 1px solid #ccc;
+}
+.header > h3 {
+  color:darkblue
+}
+.header > h6 {
+  color: lightblue
+}
+.input-form {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px;
+}
+.input-box {
+  width: 70%;
+  padding: 15px;
+  font-size: 10px;
+}
+.button-website {
+  background-color: #89419d;
+  border: none;
+  color: white;
+  padding: 15px 40px;
+  font-size: 10px;
+  cursor: pointer;
+  text-transform: uppercase;
+  border-radius: 4px;
+}
+.url-list {
+  margin: 20px;
+}
